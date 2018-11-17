@@ -15,13 +15,13 @@ public class ActivityThreadHandlerCallback implements Handler.Callback {
 
     @Override
     public boolean handleMessage(Message msg) {
-
+        Log.d(TAG, "[handleMessage] msg = " + msg.what);
         switch (msg.what) {
             case 100:
                 handleLaunchActivity(msg);
                 break;
         }
-
+        // 保证mH中的handleMessage可以继续执行
         return false;
     }
 
@@ -29,6 +29,7 @@ public class ActivityThreadHandlerCallback implements Handler.Callback {
         Log.d(TAG, "[handleLaunchActivity]");
         Object obj = msg.obj;
         try {
+            //拦截处理LAUNCH_ACTIVITY消息，替换Intent中的目标Activity信息
             Field intent = obj.getClass().getDeclaredField("intent");
             intent.setAccessible(true);
             Intent raw = (Intent) intent.get(obj);

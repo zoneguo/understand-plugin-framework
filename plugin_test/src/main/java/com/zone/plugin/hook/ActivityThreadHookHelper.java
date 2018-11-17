@@ -1,10 +1,12 @@
 package com.zone.plugin.hook;
 
 import android.os.Handler;
+import android.util.Log;
 
 import java.lang.reflect.Field;
 
 public class ActivityThreadHookHelper {
+    // 用反射的方式设置ActivityThread中mH对象mCallback成员为我们自己定义的Callback
     public static void hookActivityThreadHandler() {
         try {
             Class<?> activityThreadClass = Class.forName("android.app.ActivityThread");
